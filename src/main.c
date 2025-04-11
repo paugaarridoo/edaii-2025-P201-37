@@ -3,6 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
+#include "document.c"
 
 void createaleak() {
   char *foo = malloc(20 * sizeof(char));
@@ -14,8 +15,6 @@ int main() {
 
   // how to import and call a function
   printf("Factorial of 4 is %d\n", fact(4));
-
-
   createaleak();
 
   return 0;
