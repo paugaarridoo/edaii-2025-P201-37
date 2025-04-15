@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include <stdbool.h>
 #include "document.h"
+#include <string.h>
+#include <stdlib.h>
+#include <assert.h>
 
 Document *document_desserialize(char *path) {
     FILE *f = fopen(path, "r");

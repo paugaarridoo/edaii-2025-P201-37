@@ -15,7 +15,7 @@ int main() {
 
   // how to import and call a function
   printf("Factorial of 4 is %d\n", fact(4));
-  createaleak();
+  //createaleak();
 
   return 0;
 }
