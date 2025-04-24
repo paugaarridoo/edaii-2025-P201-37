@@ -45,8 +45,7 @@ Document *document_desserialize(char *path) {
                 assert(linkBufferIdx < linkBufferSize);
                 linkBuffer[linkBufferIdx++] = '\0';
                 int linkId = atoi(linkBuffer);
-
-                // TODO add to links
+                links->id = linkId;
 
                 linkBufferIdx = 0;
             } else if (ch != '(') { // skip first parenthesis of the link
@@ -62,6 +61,6 @@ Document *document_desserialize(char *path) {
     
     char *body = (char *)malloc(sizeof(char) * bufferIdx);
     strcpy(body, buffer);
-
+    return document;
     // TODO
 }
