@@ -5,6 +5,11 @@
 #include <stdlib.h>
 #include <assert.h>
 
+Links* LinksInit(){
+    Links* listed_links = (Links*) malloc(sizeof(Links));
+    return listed_links;
+}
+
 Document *document_desserialize(char *path) {
     FILE *f = fopen(path, "r");
     assert(f != NULL);

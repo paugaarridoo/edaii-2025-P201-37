@@ -1,4 +1,5 @@
-#include <stdlib.h>
+#ifndef DOCUMENT_H
+#define DOCUMENT_H
 
 typedef struct{
     int id;
@@ -11,7 +12,15 @@ typedef struct{
     char body[];
 } Document;
 
-Links* LinksInit(){
-    Links* listed_links = (Links*) malloc(sizeof(Links));
-    return listed_links;
-}
+typedef struct{
+    char word[50];
+} QueryItem;
+
+typedef struct{
+    QueryItem linked_list;
+} Query;
+
+Links* LinksInit();
+Document *document_desserialize(char *path);
+
+#endif
