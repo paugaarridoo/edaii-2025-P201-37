@@ -1,17 +1,6 @@
-#ifndef DOCUMENT_H
-#define DOCUMENT_H
-#include <stdlib.h>
 
-typedef struct {
-  int id;
-} Links;
 
-typedef struct {
-  int id;
-  Links list_links;
-  char title[50];
-  char body[];
-} Document;
+
 
 typedef struct Query {
   char* query_string;
