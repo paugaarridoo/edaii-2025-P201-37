@@ -1,5 +1,6 @@
 #ifndef DOCUMENT_H
 #define DOCUMENT_H
+#include <stdlib.h>
 
 typedef struct {
   int id;
