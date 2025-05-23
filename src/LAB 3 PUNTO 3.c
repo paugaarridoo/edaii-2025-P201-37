@@ -18,9 +18,9 @@ typedef struct {
 
 // Funciones del índice inverso
 INDICE_INVERSO* create_index();
-void añade_indice(InvertedIndex *index, const char *keyword, int document_id);
+void añade_indice(INDICE_INVERSO *index, const char *keyword, int document_id);
 IndicereversoNode* busca_index(INDICE_INVERSO *indice, const char *keyword);
-void print_documents_for_keyword(InvertedIndex *indice, const char *keyword, const char **documents, int num_documents);
+void print_documents_for_keyword(INDICE_INVERSO *indice, const char *keyword, const char **documents, int num_documents);
 void index_vacio(INDICE_INVERSO *indice);
 
 #endif

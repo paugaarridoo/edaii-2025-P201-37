@@ -1,22 +1,14 @@
-#include "document.c"
-#include "document.h"
+#include "LAB 1 PUNTO 3.c"
+#include "LAB 1 PUNTO 4.c"
+#include "LAB 2 PUNTO 2.c"
+#include "LAB 3 PUNTO 1.c"
+#include "LAB 3 PUNTO 2.c"
+#include "LAB 3 PUNTO 3.c"
 #include "sample_lib.h"
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <sys/stat.h>
-
-typedef struct Hashmap{
-  Node* hashmap;
-  int size;
-  int count;
-} *Hashmap;
-
-typedef struct{
-  char *word;
-  int *document_ids;
-  int *document_cuenta;
-} ReverseindexHashmap;
 
 void createaleak() {
   char *foo = malloc(20 * sizeof(char));

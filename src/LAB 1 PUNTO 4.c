@@ -1,3 +1,11 @@
+#include <stdio.h>
+#include "LAB 1 PUNTO 3.c"
+#include <stdlib.h>
+#include <stdbool.h>
+#include <assert.h>
+#include <string.h>
+
+
 Links *LinksInit() {
   Links *listed_links = (Links *)malloc(sizeof(Links));
   return listed_links;
