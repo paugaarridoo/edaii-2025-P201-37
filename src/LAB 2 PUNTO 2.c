@@ -1,3 +1,5 @@
+#include <stdio.h>
+
 typedef struct Query{
   char* query_string;
 } Query;
