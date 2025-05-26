@@ -2,6 +2,8 @@
 
 typedef struct {
   int id;
+  Links *prev;
+  Links *next;
 } Links;
 
 typedef struct {

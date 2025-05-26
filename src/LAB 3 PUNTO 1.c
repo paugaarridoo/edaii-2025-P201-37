@@ -1,6 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "LAB 2 PUNTO 2.c"
+#include "LAB 1 PUNTO 3.c"
 
 struct HashmapNode{
   struct HashmapNode *next;
