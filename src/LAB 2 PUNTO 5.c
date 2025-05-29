@@ -1,6 +1,7 @@
 #include <stdio.h>
-#include "LAB 2 PUNTO 1.c"
-#include "LAB 1 PUNTO 3.c"
+#include <string.h>               
+#include "LAB 2.1.c"
+#include "LAB 1 al completo.c"
 
 void search_documents_exclude(Document **docs, int doc_count, const char *query, const char *exclude) {
     int found = 0;
@@ -13,9 +14,9 @@ void search_documents_exclude(Document **docs, int doc_count, const char *query,
             printf("Cos: %.60s...\n", docs[i]->body);
             printf("-------------------------\n");
             found = 1;
-        }     //Comprovem que el document conté la query i no conté l'exclusió
+        }
     }
     if (!found) {
-        printf("No s'han trobat documents.\n");  //Si no hi ha documents que compleixin la condició, s'indica
+        printf("No se han encontrado documentos.\n");
     }
-}    //Funció per a comprovar que el document conté la query i no conté l'exclusió
+}
