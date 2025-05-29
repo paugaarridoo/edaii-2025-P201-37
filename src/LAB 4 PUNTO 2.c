@@ -2,7 +2,7 @@
 #include "LAB 1 PUNTO 3.c"
 #include "LAB4PUNTO1.c"
 
-Document score_in_graph(Directedgraph* graph){
+int score_in_graph(Directedgraph* graph, Document *document){
     int scores_array[graph->num_nodes];
     for (int i = 0; i < graph->num_nodes; ++i){
         scores_array[i] = 0;
@@ -14,4 +14,5 @@ Document score_in_graph(Directedgraph* graph){
             }
         }
     }
+    return scores_array[document->id];
 }
