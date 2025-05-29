@@ -1,12 +1,19 @@
 #include <stdio.h>
+#include <stdlib.h>  //Para usar el malloc especificamente
 
-typedef struct{        //Estructura per a la linked list de query
-  char *query;
-  Query *prev;
-  Query *next;
+typedef struct Query { //Creamos una estrcutura que representa nuestra consulta
+    char *query;       //Texto
+    struct Query *prev; //Puntero al nodo anterior
+    struct Query *next;  //Puntero al nodo siguiente
 } Query;
 
-Query *Querylist_init(){                                 //Estructura per a inicialitzar la linked list de query
-  Query *query_list = (Query*) malloc(sizeof(Query));
-  return query_list;
+//Creamos una función que inicializa una lista de consultas y devuelve el puntero de la lista
+Query *Querylist_init() {
+    Query *query_list = (Query *)malloc(sizeof(Query));
+    if (query_list != NULL) {
+        query_list->query = NULL;
+        query_list->prev = NULL;
+        query_list->next = NULL;
+    }
+    return query_list;
 }
