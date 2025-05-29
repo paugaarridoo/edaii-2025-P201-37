@@ -1,11 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>  //Para usar el malloc especificamente
-
-typedef struct Query { //Creamos una estrcutura que representa nuestra consulta
-    char *query;       //Texto
-    struct Query *prev; //Puntero al nodo anterior
-    struct Query *next;  //Puntero al nodo siguiente
-} Query;
+#include "LAB 2.1.h"
+#include <string.h>  //Para usar el strdup y strcpy
 
 //Creamos una función que inicializa una lista de consultas y devuelve el puntero de la lista
 Query *Querylist_init() {

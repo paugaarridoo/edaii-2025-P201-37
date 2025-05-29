@@ -1,6 +1,6 @@
 #include <stdlib.h>
 #include <string.h>
-#include "LA2.1.c"  //Incluimos el punto 2.1 donde hemos definido la estructura Query
+#include "LAB 2.1.c"  //Incluimos el punto 2.1 donde hemos definido la estructura Query
 
 //Creamos una función que inicialice un nodo Query a partir de nuestra cadena de texto
 Query *Query_init_from_string(const char *str) { // Reservamos memoria con el nuevo nodo

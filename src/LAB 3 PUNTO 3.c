@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <string.h>
 #include "LAB 3 PUNTO 2.c"
-#include "LAB 1 PUNTO 3.c"
+#include "LAB 1 al completo.c"
 
 WordNode* find_word_in_index(ReverseIndexHashmap *map, const char *word) {
     unsigned int idx = hash_word(word, map->size);
@@ -13,14 +13,14 @@ WordNode* find_word_in_index(ReverseIndexHashmap *map, const char *word) {
         node = node->next;
     }
     return NULL;
-}
+}                          // Función para buscar una palabra en el índice inverso
 
 // Busca documentos por palabra clave usando el índice inverso
 void search_documents_by_word(ReverseIndexHashmap *map, Document **docs, int doc_count, const char *word) {
     char lower_word[256];
     int i;
     for (i = 0; word[i] && i < 255; ++i)
-        lower_word[i] = tolower(word[i]);
+        lower_word[i] = tolower(word[i]);      // Pasamos a minúsculas
     lower_word[i] = '\0';
 
     WordNode *node = find_word_in_index(map, lower_word);
@@ -39,4 +39,4 @@ void search_documents_by_word(ReverseIndexHashmap *map, Document **docs, int doc
             }
         }
     }
-}
+}              //Función para buscar documentos por palabra clave usando el índice inverso

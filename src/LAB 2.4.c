@@ -2,13 +2,10 @@
 #include <stdlib.h>
 #include <string.h>
 #include "LAB 2.1.c"
+#include "LAB 2.4.h"
 #define MAX_RECENT_QUERIES 3
 
-typedef struct{                          //Estructura para la cola de queries
-    Query *queries[MAX_RECENT_QUERIES];
-    int start;
-    int count;
-} QueryQueue;
+
 
 void queue_init(QueryQueue *q){  //Inicializamos la cola de queries
     q->start = 0;

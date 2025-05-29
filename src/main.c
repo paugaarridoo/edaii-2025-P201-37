@@ -1,14 +1,20 @@
-#include "LAB 1 PUNTO 3.c"
-#include "LAB 1 PUNTO 4.c"
-#include "LAB 2 PUNTO 2.c"
+#include "LAB 1 al completo.c"
+#include "LAB 2.1.c"
+#include "LAB 2.2.c"
+#include "LAB 2.3.c"
+#include "LAB 2.4.c"
+#include "LAB 2.5.c"
 #include "LAB 3 PUNTO 1.c"
 #include "LAB 3 PUNTO 2.c"
 #include "LAB 3 PUNTO 3.c"
-#include "LAB 2 PUNTO 1.c"
-#include "LAB 2 PUNTO 3.c"
-#include "LAB 2 PUNTO 4.c"
-#include "LAB 2 PUNTO 5.c"
+#include "LAB 3 PUNTO 4.c"
+#include "LAB 4 PUNTO 1.c"
+#include "LAB 4 PUNTO 1.h"
+#include "LAB 4 PUNTO 2.c"
+#include "punto 3 LAB 4.c"
 #include "sample_lib.h"
+#include "sample_lib.c"
+
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>

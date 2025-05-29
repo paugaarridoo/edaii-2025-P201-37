@@ -1,12 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include "LAB 4 PUNTO 1.h"
-#include "LAB 1 PUNTO 3.c"
+#include "LAB 1 al completo.c"
+#include "punto 3 LAB 4.h"
 
-typedef struct{
-    Document* doc;
-    int relevance;
-} SearchResult;     // Estructura para almacenar resultados de búsqueda
+
 
 int compara_relevancia(const void* a, const void* b) {   //Función para comparar dos reultados de budqueda por relevancia
     const SearchResult* ra = (const SearchResult*)a;

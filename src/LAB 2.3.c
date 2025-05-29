@@ -4,7 +4,7 @@
 #include <dirent.h>
 #include "LAB 1 al completo.c"
 #include "LAB 2.1.c"
-#include "LAB 2.2c"
+#include "LAB 2.2.c"
 
 #define MAX_PATH_LEN 256
 
