@@ -1,26 +1,42 @@
-#ifndef indice_INVERSO_H
-#define indice_INVERSO_H
 #include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
+#include "LAB 3 PUNTO 2.c"
+#include "LAB 1 PUNTO 3.c"
 
-// Estructura para el índice inverso
-typedef struct IndicereversoNode {
-    char *keyword;                // Palabra clave
-    int *document_ids;            // Arreglo de IDs de documentos que contienen la palabra
-    int *document_cuenta;           // Número de documentos que contienen la palabra
-    struct IndicereversoNode *next;
-} IndicereversoNode;
+WordNode* find_word_in_index(ReverseIndexHashmap *map, const char *word) {
+    unsigned int idx = hash_word(word, map->size);
+    WordNode *node = map->buckets[idx];
+    while (node) {
+        if (strcmp(node->word, word) == 0) {
+            return node;
+        }
+        node = node->next;
+    }
+    return NULL;
+}
 
-typedef struct {
-    IndicereversoNode *head;
-} INDICE_INVERSO;
+// Busca documentos por palabra clave usando el índice inverso
+void search_documents_by_word(ReverseIndexHashmap *map, Document **docs, int doc_count, const char *word) {
+    char lower_word[256];
+    int i;
+    for (i = 0; word[i] && i < 255; ++i)
+        lower_word[i] = tolower(word[i]);
+    lower_word[i] = '\0';
 
-// Funciones del índice inverso
-INDICE_INVERSO* create_index();
-void añade_indice(INDICE_INVERSO *index, const char *keyword, int document_id);
-IndicereversoNode* busca_index(INDICE_INVERSO *indice, const char *keyword);
-void print_documents_for_keyword(INDICE_INVERSO *indice, const char *keyword, const char **documents, int num_documents);
-void index_vacio(INDICE_INVERSO *indice);
-
-#endif
+    WordNode *node = find_word_in_index(map, lower_word);
+    if (!node) {
+        printf("No se encontraron documentos para la palabra: %s\n", word);
+        return;
+    }
+    printf("Documentos que contienen la palabra '%s':\n", word);
+    for (int i = 0; i < node->doc_count; ++i) {
+        int doc_id = node->document_ids[i];
+        // Busca el documento por id
+        for (int j = 0; j < doc_count; ++j) {
+            if (docs[j]->id == doc_id) {
+                printf("ID: %d | Título: %s\n", docs[j]->id, docs[j]->title);
+                break;
+            }
+        }
+    }
+}
