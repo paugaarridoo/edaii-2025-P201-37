@@ -2,7 +2,7 @@
 #include <stdio.h>
 #include "LAB 4 PUNTO 1.h"
 
-//creamos un grafo con num_nodes nodos vacios
+//creamos un grafo con nodos vacios
 DirectedGraph* create_graph(int num_nodes) {
     DirectedGraph* graph = malloc(sizeof(DirectedGraph));
     graph->num_nodes = num_nodes;
@@ -10,7 +10,7 @@ DirectedGraph* create_graph(int num_nodes) {
     return graph;
 }
 
-//agregamos una flecha de from_id a to_id
+//agregamos una flecha from-id to_id
 void add_edge(DirectedGraph* graph, int from_id, int to_id) {
     GraphNode* new_node = malloc(sizeof(GraphNode));
     new_node->target_id = to_id;
@@ -18,7 +18,7 @@ void add_edge(DirectedGraph* graph, int from_id, int to_id) {
     graph->adj_list[from_id] = new_node;
 }
 
-//vemos cuantas flechas le llegan al nodo doc_id
+//vemos cuantas flechas le llegan al nodo docid
 int graph_get_indegree(DirectedGraph* graph, int doc_id) {
     int indegree = 0;
     for (int i = 0; i < graph->num_nodes; i++) {
