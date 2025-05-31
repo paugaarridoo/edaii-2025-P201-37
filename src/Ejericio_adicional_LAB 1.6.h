@@ -22,8 +22,3 @@ void test_document_parse_simple() { //Función de prueba para parsear un documen
     remove("test_doc.txt");
 }
 
-int main() { //Ejecutar la función.
-    test_document_parse_simple();
-    printf("Prueba de parseo de documento pasada.\n");
-    return 0;
-}
