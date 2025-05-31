@@ -24,7 +24,7 @@ unsigned int hash_word(const char *word, int size) {
     while ((c = *word++))
         hash = ((hash << 5) + hash) + c;
     return hash % size;
-}                                                  //Función de hash para las palabras
+}                                                  //Función que decide en qué posición guardar la palabra en la tabla hash.
 
 ReverseIndexHashmap *create_reverse_index(int size) {
     ReverseIndexHashmap *map = (ReverseIndexHashmap*) malloc(sizeof(ReverseIndexHashmap));

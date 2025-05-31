@@ -26,7 +26,7 @@ Hashmap *create_hashmap(int size){
 
 int hash_function(int id, int size){
    return id % size; 
-}                         //Función de hash para obtener el índice del bucket en el Hashmap
+}                         //Función que decide en qué posición guardar el dato en la tabla hash.
 
 void add_document(Document *document, Hashmap *hashmap){           
   int idx = hash_function(document->id, hashmap->size);
@@ -48,7 +48,7 @@ Document *get_document(int id, Hashmap *hashmap) {
         node = node->next;
     }
     return NULL; 
-}                //Función para obten er un documento del Hashmap mediante su id
+}                //Función para obtener un documento del Hashmap mediante su id
 
 void free_hashmap(Hashmap *hashmap) {
     for (int i = 0; i < hashmap->size; ++i) {
