@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "LAB 1 al completo.c"
-#include "LAB 3 PUNTO 2.h"
+#include "LAB_1_al_completo.c"
+#include "LAB_3_PUNTO 2.h"
+#include <windows.h>
+
 
 unsigned int hash_word(const char *word, int size) {
     unsigned int hash = 5381;

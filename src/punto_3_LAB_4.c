@@ -1,8 +1,10 @@
+#include <windows.h>
+
 #include <stdio.h>
 #include <stdlib.h>
-#include "LAB 4 PUNTO 1.h"
-#include "LAB 1 al completo.c"
-#include "punto 3 LAB 4.h"
+#include "LAB_4_PUNTO_1.h"
+#include "LAB_1_al_completo.c"
+#include "punto_3_LAB_4.h"
 
 
 

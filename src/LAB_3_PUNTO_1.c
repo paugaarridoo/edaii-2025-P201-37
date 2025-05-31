@@ -1,8 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include "LAB 2.2.c"
-#include "LAB 1 al completo.c"
-#include "LAB 3 PUNTO 1.h"
+#include "LAB_2.2.c"
+#include "LAB_1_al_completo.c"
+#include "LAB_3_PUNTO 1.h"
+#include <windows.h>
+
 
 Hashmap *create_hashmap(int size){
   Hashmap *new_hashmap = (Hashmap*) malloc(sizeof(Hashmap));

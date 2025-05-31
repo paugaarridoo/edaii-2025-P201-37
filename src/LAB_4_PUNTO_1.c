@@ -1,6 +1,8 @@
 #include <stdlib.h>
 #include <stdio.h>
-#include "LAB 4 PUNTO 1.h"
+#include "LAB_4_PUNTO_1.h"
+#include <windows.h>
+
 
 //creamos un grafo con nodos vacios
 DirectedGraph* create_graph(int num_nodes) {

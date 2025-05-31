@@ -1,7 +1,9 @@
 #include <assert.h>
 #include <stdio.h>
 #include <string.h>
-#include "LAB 1 al completo.c" //Incluimos el archivo que contiene las definiciones de Document y las funciones pertinentes
+#include "LAB_1_al_completo.c" //Incluimos el archivo que contiene las definiciones de Document y las funciones pertinentes
+#include <windows.h>
+
 
 void test_document_parse_simple() { //Función de prueba para parsear un documento de prueba temporal
     

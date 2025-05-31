@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>               
-#include "LAB 2.1.c"
-#include "LAB 1 al completo.c"
+#include "LAB_2.1.c"
+#include "LAB_1_al_completo.c"
+#include <windows.h>
+#include "LAB_2.2.c"
 
 void search_documents_exclude(Document **docs, int doc_count, const char *query, const char *exclude) {
     int found = 0;

@@ -1,6 +1,8 @@
 #include <stdio.h>
-#include "LAB 4 PUNTO 1.h" //grafo dirigido
-#include "LAB 1 al completo.c" //definicion de Document y Link
+#include "LAB_4_PUNTO_1.h" //grafo dirigido
+#include "LAB_1_al_completo.c" //definicion de Document y Link
+#include <windows.h>
+
 
 //imprime el score de cada documento segun cuantas flechas le llegan en el grafo
 void print_relevance_scores(DirectedGraph* graph, Document* documents) {

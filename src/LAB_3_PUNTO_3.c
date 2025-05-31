@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <string.h>
-#include "LAB 3 PUNTO 2.c"
-#include "LAB 1 al completo.c"
+#include "LAB_3_PUNTO 2.c"
+#include "LAB_1_al_completo.c"
+#include <windows.h>
+
 
 WordNode* find_word_in_index(ReverseIndexHashmap *map, const char *word) {
     unsigned int idx = hash_word(word, map->size);

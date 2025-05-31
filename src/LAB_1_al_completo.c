@@ -4,7 +4,9 @@
 #include <stdbool.h>
 #include <assert.h>
 #include <dirent.h> //Para operaciones con directorios y archivos
-#include "LAB 1 al completo.h" //Incluimos la definición de Document y Link
+#include "LAB_1_al_completo.h" //Incluimos la definición de Document y Link
+#include <windows.h>
+
 
 
 

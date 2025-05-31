@@ -1,3 +1,5 @@
+#include <windows.h>
+
 #define MAX_RECENT_QUERIES 3
 
 

@@ -1,5 +1,7 @@
 #include <ctype.h>
 #include <string.h>
+#include <windows.h>
+
 
 //funcion que adapta palabras
 void normalize_word(char* word) {

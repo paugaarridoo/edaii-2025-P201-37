@@ -1,3 +1,5 @@
+#include <windows.h>
+
 typedef struct WordNode{
   char *word;
   int *document_ids;

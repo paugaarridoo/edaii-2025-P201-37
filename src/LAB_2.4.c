@@ -1,9 +1,11 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "LAB 2.1.c"
-#include "LAB 2.4.h"
+#include "LAB_2.1.c"
+#include "LAB_2.4.h"
 #define MAX_RECENT_QUERIES 3
+#include <windows.h>
+
 
 
 

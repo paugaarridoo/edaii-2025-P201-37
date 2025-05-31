@@ -1,7 +1,9 @@
 #include <stdio.h>
 #include <stdlib.h>  //Para usar el malloc especificamente
-#include "LAB 2.1.h"
+#include "LAB_2.1.h"
 #include <string.h>  //Para usar el strdup y strcpy
+#include <windows.h>
+
 
 //Creamos una función que inicializa una lista de consultas y devuelve el puntero de la lista
 Query *Querylist_init() {

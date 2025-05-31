@@ -1,4 +1,6 @@
-#include "LAB 1 al completo.h"
+#include <windows.h>
+
+#include "LAB_1_al_completo.h"
 typedef struct{
     Document* doc;
     int relevance;

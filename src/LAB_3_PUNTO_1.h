@@ -1,4 +1,6 @@
-#include "LAB 1 al completo.h"
+#include "LAB_1_al_completo.h"
+#include <windows.h>
+
 
 
 typedef struct HashmapNode{

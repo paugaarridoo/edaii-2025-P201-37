@@ -2,9 +2,11 @@
 #include <stdlib.h>
 #include <string.h>     
 #include <dirent.h>
-#include "LAB 1 al completo.c"
-#include "LAB 2.1.c"
-#include "LAB 2.2.c"
+#include "LAB_1_al_completo.c"
+#include "LAB_2.1.c"
+#include "LAB_2.2.c"
+#include <windows.h>
+
 
 #define MAX_PATH_LEN 256
 
