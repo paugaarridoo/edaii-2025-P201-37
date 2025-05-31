@@ -1,4 +1,4 @@
-
+#include "Ejericio_adicional_LAB 1.6.h"
 #include "LAB_1_al_completo.h"
 #include "LAB_2.1.h"
 #include "LAB_2.2.h"
@@ -13,8 +13,6 @@
 #include "LAB_4_PUNTO_2.h"
 #include "punto_3_LAB_4.h"
 #include "sample_lib.h"
-#include "sample_lib.h"
-
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
