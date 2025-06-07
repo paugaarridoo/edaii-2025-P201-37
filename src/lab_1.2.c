@@ -23,24 +23,31 @@ int Document_init_from_file(Document* doc, const char* filepath) {
     doc->titol = strdup(titol_buffer);
 
     // Llegeix la resta com a contingut
+    long contingut_start = ftell(f);
     fseek(f, 0, SEEK_END);
-    long filesize = ftell(f);
-    fseek(f, 0, SEEK_SET);
+    long contingut_end = ftell(f);
+    long contingut_len = contingut_end - contingut_start;
+    fseek(f, contingut_start, SEEK_SET);
 
-    // Salta la primera i segona línia
-    fgets(titol_buffer, sizeof(titol_buffer), f); // id
-    fgets(titol_buffer, sizeof(titol_buffer), f); // titol
-
-    // Llegeix la resta
-    char *contingut_buffer = (char*)malloc(filesize);
-    size_t len = fread(contingut_buffer, 1, filesize, f);
-    contingut_buffer[len] = '\0';
+    char *contingut_buffer = (char*)malloc(contingut_len + 1);
+    if (contingut_len > 0) {
+        fread(contingut_buffer, 1, contingut_len, f);
+    }
+    contingut_buffer[contingut_len] = '\0';
     doc->contingut = contingut_buffer;
 
     fclose(f);
 
     // Inicialitza la llista d'enllaços si cal
-    // LinkList_init(&doc->links); // Si tens una funció d'inicialització
+    // LinkList_init(&doc->links);
 
     return 1;
+}
+
+void Document_lliberar(Document* doc) {
+    if (doc->titol) free(doc->titol);
+    if (doc->contingut) free(doc->contingut);
+    // LinkList_lliberar(&doc->links); // Si tens implementació
+    doc->titol = NULL;
+    doc->contingut = NULL;
 }
