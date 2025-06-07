@@ -1,72 +1,103 @@
-#include "Ejericio_adicional_LAB 1.6.h"
-#include "LAB_1_al_completo.h"
-#include "LAB_2.1.h"
-#include "LAB_2.2.h"
-#include "LAB_2.3.h"
-#include "LAB_2.4.h"
-#include "LAB_2.5.h"
-#include "LAB_3_PUNTO_1.h"
-#include "LAB_3_PUNTO_2.h"
-#include "LAB_3_PUNTO_3.h"
-#include "LAB_3_PUNTO_4.h"
-#include "LAB_4_PUNTO_1.h"
-#include "LAB_4_PUNTO_2.h"
-#include "punto_3_LAB_4.h"
+#include "lab_1.1.h"
+#include "lab_1.2.h"
+#include "lab_1.3.h"
+#include "lab_1.4.h"
+#include "lab_1.5.h"
+#include "lab_2.1.h"
+#include "lab_2.2.h"
+#include "lab_2.3.h"
+#include "lab_2.4.h"
+#include "lab_2.5.h"
+#include "lab_3.1.h"
+#include "lab_3.2.h"
+#include "lab_3.3.h"
 #include "sample_lib.h"
 #include <dirent.h>
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <sys/stat.h>
 #define MAX_PATH_LEN 256
 
-void createaleak() {
-  char *foo = malloc(20 * sizeof(char));
-  printf("Allocated leaking string: %s", foo);
-}
-
 int main() {
-  printf("*****************\nWelcome to EDA 2!\n*****************\n");
+    printf("*****************\nWelcome to EDA 2!\n*****************\n");
 
-  printf("Introduce el nombre de la carpeta de documentos: ");
+    printf("Introduce el nombre de la carpeta de documentos: ");
     char folder[MAX_PATH_LEN];
     scanf("%255s", folder);
 
-    
-    int max_docs = 5400; // Valor máximo posible
-    char *doc_paths[max_docs];
-    for (int i = 0; i < max_docs; ++i) {
-        doc_paths[i] = malloc(MAX_PATH_LEN);
+    // Carreguem els documents de la carpeta
+    DocumentList llista;
+    DocumentList_init(&llista);
+    int doc_count = DocumentList_carregar_des_de_carpeta(&llista, folder);
+
+    // Preparem un array de punters a Document per accés ràpid
+    Document *docs[doc_count];
+    int idx = 0;
+    for (DocumentNode *node = llista.cap; node != NULL; node = node->seguent) {
+        docs[idx++] = &node->doc;
     }
 
-    int doc_count = load_doc_paths(folder, doc_paths, max_docs);  // Ajusta el máximo según la carpeta
-
-    Document *docs[max_docs];
+    // Creem el reverse index i l'omplim amb totes les paraules de tots els documents
+    ReverseIndexHashmap *rev_index = create_reverse_index(200);
     for (int i = 0; i < doc_count; ++i) {
-        docs[i] = document_desserialize(doc_paths[i]);
+        // Fem servir 'contingut' i 'id' segons la teva estructura
+        char *text = docs[i]->contingut;
+        // Fem una còpia per no modificar l'original amb strtok
+        char *text_copy = strdup(text ? text : "");
+        char *token = strtok(text_copy, " ,.-\n\r\t");
+        while (token) {
+            add_word_to_reverse_index(rev_index, token, docs[i]->id);
+            token = strtok(NULL, " ,.-\n\r\t");
+        }
+        free(text_copy);
     }
 
-  QueryQueue recent_queries;
-  queue_init(&recent_queries);
-  while(1) {
-    char query[100];
-    char exclude[100];
-    printf("Introdueix query ('exit' per sortir):");
-    scanf("%99s", &query);
-    if (strcmp(query, "exit") == 0){
-      break;
+    QueryQueue recent_queries;
+    queue_init(&recent_queries);
+
+    while (1) {
+        char query[100];
+        char exclude[100];
+        printf("Introdueix query ('exit' per sortir): ");
+        scanf("%99s", query);
+        if (strcmp(query, "exit") == 0) {
+            break;
+        }
+        printf("Palabra a excluir (ENTER para ninguna): ");
+        int c;
+        while ((c = getchar()) != '\n' && c != EOF) {}
+        fgets(exclude, 100, stdin);
+        exclude[strcspn(exclude, "\n")] = 0;
+
+        Query *q = Query_init_from_string(query);
+        queue_push(&recent_queries, q);
+        queue_print(&recent_queries);
+
+        // Cerca eficient amb el reverse index
+        int found_count = 0;
+        int *found_docs = search_documents_by_word(rev_index, query, &found_count);
+
+        if (found_count > 0) {
+            printf("Documents trobats per '%s':\n", query);
+            for (int i = 0; i < found_count; ++i) {
+                printf("Document ID: %d\n", found_docs[i]);
+            }
+        } else {
+            printf("Cap document trobat per '%s'.\n", query);
+        }
+        free(found_docs);
+
+        // Si hi ha paraula a excloure, pots fer una cerca addicional aquí
+        if (strlen(exclude) > 0) {
+            printf("Exclusió de documents amb la paraula: %s (no implementat en aquest exemple)\n", exclude);
+            // Aquí pots filtrar els found_docs si vols excloure documents que continguin 'exclude'
+        }
     }
-    printf("Palabra a excluir (ENTER para ninguna):");  //Excluim una paraula de la query
-    int c;
-    while ((c = getchar()) != '\n' && c != EOF) {}  //Netejem el buffer d'entrada
-    fgets(exclude, 100, stdin);
-    exclude[strcspn(exclude, "\n")] = 0;      //Eliminem el salt de línia al final de la cadena
-    Query *q = Query_init_from_string(query);
-    queue_push(&recent_queries, q);
-    queue_print(&recent_queries);
-    if (strlen(exclude) > 0) {
-      search_documents_exclude(docs, doc_count, query, exclude);
-    }
-    search_documents_exclude(docs, doc_count, query, NULL);
-  }
-  return 0;
+
+    // Alliberar memòria
+    free_reverse_index(rev_index);
+    DocumentList_lliberar(&llista);
+
+    return 0;
 }

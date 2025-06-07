@@ -1,21 +1,17 @@
-#include <stdio.h>
-#include <stdlib.h>  //Para usar el malloc especificamente
-#include <string.h>  //Para usar el strdup y strcpy
+#pragma once
 
+//defineix la estrcutura del node de la llista de consultes
+typedef struct ConsultaNode {
+    char* consulta;
+    struct ConsultaNode* seguent;
+} ConsultaNode;
+//Estrcutra de la llista enllaçada de coonsultes 
+typedef struct {
+    ConsultaNode* cap;
+} ConsultaList;
 
-typedef struct Query { //Creamos una estrcutura que representa nuestra consulta
-    char *query;       //Texto
-    struct Query *prev; //Puntero al nodo anterior
-    struct Query *next;  //Puntero al nodo siguiente
-} Query;
-
-//Creamos una función que inicializa una lista de consultas y devuelve el puntero de la lista
-Query *Querylist_init() {
-    Query *query_list = (Query *)malloc(sizeof(Query));
-    if (query_list != NULL) {
-        query_list->query = NULL;
-        query_list->prev = NULL;
-        query_list->next = NULL;
-    }
-    return query_list;
-}
+//Declaracions de les funcions per a la llista de consultes
+void ConsultaList_init(ConsultaList* llista); //Inicialitza la llista de conusltes
+void ConsultaList_agregar(ConsultaList* llista, const char* consulta); //Afegeic una consulta a la llista
+void ConsultaList_imprimir(const ConsultaList* llista); //Imprimeix totes les consultes de la llista
+void ConsultaList_lliberar(ConsultaList* llista); //Allibera tota la memoria de la llista
