@@ -32,16 +32,20 @@ int load_doc_paths(const char* folder, char* doc_paths[], int max_docs) {
     struct dirent* entry;
     int count = 0;
     while ((entry = readdir(dir)) && count < max_docs) {
-        // Ignora directoris "." i ".."
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
-        // Comprova la llargada total abans de copiar
-        size_t total_len = strlen(folder) + 1 + strlen(entry->d_name);
-        if (total_len >= MAX_PATH_LEN) {
+        size_t folder_len = strlen(folder);
+        size_t name_len = strlen(entry->d_name);
+        // Comprova que càpiga tot (folder + '/' + nom + '\0')
+        if (folder_len + 1 + name_len >= MAX_PATH_LEN) {
             fprintf(stderr, "Path massa llarg: %s/%s\n", folder, entry->d_name);
             continue;
         }
-        snprintf(doc_paths[count], MAX_PATH_LEN, "%s/%s", folder, entry->d_name);
+        // Concatena manualment per evitar qualsevol warning
+        strncpy(doc_paths[count], folder, MAX_PATH_LEN - 1);
+        doc_paths[count][MAX_PATH_LEN - 1] = '\0';
+        strncat(doc_paths[count], "/", MAX_PATH_LEN - strlen(doc_paths[count]) - 1);
+        strncat(doc_paths[count], entry->d_name, MAX_PATH_LEN - strlen(doc_paths[count]) - 1);
         count++;
     }
     closedir(dir);
