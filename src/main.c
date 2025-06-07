@@ -52,20 +52,6 @@ int load_doc_paths(const char* folder, char* doc_paths[], int max_docs) {
     return count;
 }
 
-// Funció per construir l'índex invers
-void construir_index_invers(ReverseIndexHashmap *rev_index, Document **docs, int doc_count) {
-    for (int i = 0; i < doc_count; ++i) {
-        char *text = docs[i]->contingut;
-        char *text_copy = strdup(text ? text : "");
-        char *token = strtok(text_copy, " ,.-\n\r\t");
-        while (token) {
-            add_word_to_reverse_index(rev_index, token, docs[i]->id);
-            token = strtok(NULL, " ,.-\n\r\t");
-        }
-        free(text_copy);
-    }
-}
-
 int main() {
     printf("*****************\nWelcome to EDA 2!\n*****************\n");
 
