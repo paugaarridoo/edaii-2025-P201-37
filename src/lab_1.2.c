@@ -1,48 +1,46 @@
-#include "lab_1.2.h" // Per l'estrcutura Document i les seves funcions
+#include "lab_1.2.h"
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-//Inicialitza un document a partir d'un fitxer
+
 int Document_init_from_file(Document* doc, const char* filepath) {
-    FILE* f = fopen(filepath, "r"); //Obre aquest en mode lectura
-    if (!f) return 0; //En cas de que no es pugui obrir retornara error
+    FILE *f = fopen(filepath, "r");
+    if (!f) return 0;
 
-    char buffer[2000]; //Creem un buffer per a que pugui llegir les linies del futxer
-
-    //Llegeix la primera linia que es el titol del document
-    if (!fgets(buffer, sizeof(buffer), f)) {
+    // Llegeix l'id (primera línia)
+    if (fscanf(f, "%d\n", &doc->id) != 1) {
         fclose(f);
         return 0;
     }
-    buffer[strcspn(buffer, "\n")] = 0; //Elimina que es pugui fer un salt de linia
-    doc->titol = strdup(buffer);
 
-    //Una vegada ha llegit el titol. llegeix el contingut del document
-    size_t contingut_len = 0;
-    size_t contingut_cap = 2000; //Cpacitat inicial
-    char* contingut = malloc(contingut_cap);
-    contingut[0] = '\0';
-    //Fem un bucle per a que llegeixi tot el contingut del fitxer linia a linia
-    while (fgets(buffer, sizeof(buffer), f)) {
-        size_t linelen = strlen(buffer);
-        if (contingut_len + linelen + 1 > contingut_cap) {
-            contingut_cap *= 2;
-            contingut = realloc(contingut, contingut_cap);
-        }
-        strcat(contingut, buffer);
-        contingut_len += linelen;
+    // Llegeix el títol (segona línia)
+    char titol_buffer[256];
+    if (!fgets(titol_buffer, sizeof(titol_buffer), f)) {
+        fclose(f);
+        return 0;
     }
-doc->contingut = contingut;
+    titol_buffer[strcspn(titol_buffer, "\r\n")] = 0; // Elimina salt de línia
+    doc->titol = strdup(titol_buffer);
 
-    //Inicialitza buidament la llista dels enlalços
-    LinkList_init(&doc->links);
+    // Llegeix la resta com a contingut
+    fseek(f, 0, SEEK_END);
+    long filesize = ftell(f);
+    fseek(f, 0, SEEK_SET);
+
+    // Salta la primera i segona línia
+    fgets(titol_buffer, sizeof(titol_buffer), f); // id
+    fgets(titol_buffer, sizeof(titol_buffer), f); // titol
+
+    // Llegeix la resta
+    char *contingut_buffer = (char*)malloc(filesize);
+    size_t len = fread(contingut_buffer, 1, filesize, f);
+    contingut_buffer[len] = '\0';
+    doc->contingut = contingut_buffer;
 
     fclose(f);
+
+    // Inicialitza la llista d'enllaços si cal
+    // LinkList_init(&doc->links); // Si tens una funció d'inicialització
+
     return 1;
-}
-//Tornem a allibrera tota la memoria utlitzada pel document
-void Document_lliberar(Document* doc) {
-    free(doc->titol);
-    free(doc->contingut);
-    LinkList_lliberar(&doc->links);
 }
