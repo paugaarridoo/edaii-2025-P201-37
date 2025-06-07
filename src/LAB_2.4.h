@@ -1,9 +1,6 @@
 #pragma once
 #include <stddef.h>
-//Declaració de l'estructura per a una consulta individual
-typedef struct {
-    char* consulta;
-} Consulta;
+#include "lab_2.2.h" //Per a la definició de Consulta i les seves funcions pertinents
 //Declaració per a la cua de les ultimes tres consultes
 typedef struct {
     Consulta consultes[3];

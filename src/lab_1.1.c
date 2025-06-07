@@ -41,3 +41,4 @@ void LinkList_lliberar(LinkList* llista) {
         free(temp);
     }
     llista->cap= NULL; // Deixa la llista buida
+}

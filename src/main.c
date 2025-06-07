@@ -1,3 +1,9 @@
+#include <stdio.h>
+#include <stdlib.h>
+#include <string.h>
+#include <dirent.h>
+#include <sys/stat.h>
+
 #include "lab_1.1.h"
 #include "lab_1.2.h"
 #include "lab_1.3.h"
@@ -12,38 +18,34 @@
 #include "lab_3.2.h"
 #include "lab_3.3.h"
 #include "sample_lib.h"
-#include <dirent.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <string.h>
-#include <sys/stat.h>
+
 #define MAX_PATH_LEN 256
+#define MAX_DOCS 5400
 
-int main() {
-    printf("*****************\nWelcome to EDA 2!\n*****************\n");
-
-    printf("Introduce el nombre de la carpeta de documentos: ");
-    char folder[MAX_PATH_LEN];
-    scanf("%255s", folder);
-
-    // Carreguem els documents de la carpeta
-    DocumentList llista;
-    DocumentList_init(&llista);
-    int doc_count = DocumentList_carregar_des_de_carpeta(&llista, folder);
-
-    // Preparem un array de punters a Document per accés ràpid
-    Document *docs[doc_count];
-    int idx = 0;
-    for (DocumentNode *node = llista.cap; node != NULL; node = node->seguent) {
-        docs[idx++] = &node->doc;
+// Carrega els paths dels fitxers d'una carpeta
+int load_doc_paths(const char* folder, char* doc_paths[], int max_docs) {
+    DIR* dir = opendir(folder);
+    if (!dir) {
+        printf("No s'ha pogut obrir la carpeta.\n");
+        return 0;
     }
+    struct dirent* entry;
+    int count = 0;
+    while ((entry = readdir(dir)) && count < max_docs) {
+        // Ignora directoris "." i ".."
+        if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
+            continue;
+        snprintf(doc_paths[count], MAX_PATH_LEN, "%s/%s", folder, entry->d_name);
+        count++;
+    }
+    closedir(dir);
+    return count;
+}
 
-    // Creem el reverse index i l'omplim amb totes les paraules de tots els documents
-    ReverseIndexHashmap *rev_index = create_reverse_index(200);
+// Funció per construir l'índex invers
+void construir_index_invers(ReverseIndexHashmap *rev_index, Document **docs, int doc_count) {
     for (int i = 0; i < doc_count; ++i) {
-        // Fem servir 'contingut' i 'id' segons la teva estructura
         char *text = docs[i]->contingut;
-        // Fem una còpia per no modificar l'original amb strtok
         char *text_copy = strdup(text ? text : "");
         char *token = strtok(text_copy, " ,.-\n\r\t");
         while (token) {
@@ -52,34 +54,45 @@ int main() {
         }
         free(text_copy);
     }
+}
 
-    QueryQueue recent_queries;
-    queue_init(&recent_queries);
+int main() {
+    printf("*****************\nWelcome to EDA 2!\n*****************\n");
 
+    printf("Introdueix el nom de la carpeta de documents: ");
+    char folder[MAX_PATH_LEN];
+    scanf("%255s", folder);
+
+    char* doc_paths[MAX_DOCS];
+    for (int i = 0; i < MAX_DOCS; ++i) {
+        doc_paths[i] = malloc(MAX_PATH_LEN);
+    }
+
+    int doc_count = load_doc_paths(folder, doc_paths, MAX_DOCS);
+
+    // Carrega els documents
+    Document* docs[MAX_DOCS];
+    for (int i = 0; i < doc_count; ++i) {
+        docs[i] = malloc(sizeof(Document));
+        Document_init_from_file(docs[i], doc_paths[i]);
+    }
+
+    // Inicialitza el reverse index
+    ReverseIndexHashmap *reverse_index = create_reverse_index(200);
+    construir_index_invers(reverse_index, docs, doc_count);
+
+    char query[256];
     while (1) {
-        char query[100];
-        char exclude[100];
-        printf("Introdueix query ('exit' per sortir): ");
-        scanf("%99s", query);
-        if (strcmp(query, "exit") == 0) {
-            break;
-        }
-        printf("Palabra a excluir (ENTER para ninguna): ");
-        int c;
-        while ((c = getchar()) != '\n' && c != EOF) {}
-        fgets(exclude, 100, stdin);
-        exclude[strcspn(exclude, "\n")] = 0;
+        printf("\nIntrodueix la teva consulta ('exit' per sortir): ");
+        scanf(" %[^\n]", query);
+        if (strcmp(query, "exit") == 0) break;
 
-        Query *q = Query_init_from_string(query);
-        queue_push(&recent_queries, q);
-        queue_print(&recent_queries);
-
-        // Cerca eficient amb el reverse index
+        // Cerca eficient amb índex invers
         int found_count = 0;
-        int *found_docs = search_documents_by_word(rev_index, query, &found_count);
+        int *found_docs = search_documents_by_word(reverse_index, query, &found_count);
 
+        printf("\nResultats de la cerca:\n");
         if (found_count > 0) {
-            printf("Documents trobats per '%s':\n", query);
             for (int i = 0; i < found_count; ++i) {
                 printf("Document ID: %d\n", found_docs[i]);
             }
@@ -87,17 +100,16 @@ int main() {
             printf("Cap document trobat per '%s'.\n", query);
         }
         free(found_docs);
-
-        // Si hi ha paraula a excloure, pots fer una cerca addicional aquí
-        if (strlen(exclude) > 0) {
-            printf("Exclusió de documents amb la paraula: %s (no implementat en aquest exemple)\n", exclude);
-            // Aquí pots filtrar els found_docs si vols excloure documents que continguin 'exclude'
-        }
     }
 
-    // Alliberar memòria
-    free_reverse_index(rev_index);
-    DocumentList_lliberar(&llista);
+    // Allibera memòria
+    for (int i = 0; i < MAX_DOCS; ++i) free(doc_paths[i]);
+    for (int i = 0; i < doc_count; ++i) {
+        Document_lliberar(docs[i]);
+        free(docs[i]);
+    }
+    free_reverse_index(reverse_index);
 
+    printf("Fins aviat!\n");
     return 0;
 }

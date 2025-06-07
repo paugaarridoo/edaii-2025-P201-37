@@ -21,3 +21,4 @@ int frase_valida(const char* frase, char* excloses[], int n_excloses) {
         paraula = strtok(NULL, " \t\n\r");
     }
     return 1; //frase valida
+}
