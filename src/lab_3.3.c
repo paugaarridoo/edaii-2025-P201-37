@@ -2,14 +2,15 @@
 #include <string.h>
 #include <stdlib.h>
 
+//cerca amb el reverse index els documents que contenen la paraula
 int* search_documents_by_word(ReverseIndexHashmap *map, const char *word, int *doc_count) {
     unsigned int idx = 0;
     if (map && word) {
-        idx = hash_word(word, map->size); // hash_word és static a lab_3.2.c, cal declarar-la a lab_3.2.h si vols reutilitzar-la
+        idx = hash_word(word, map->size); //hash_word es static a lab_3.2.c cal declarar-la a lab_3.2.h si vols reutilitzarla
         WordNode *node = map->buckets[idx];
         while (node) {
             if (strcmp(node->word, word) == 0) {
-                // Retorna còpia dels document_ids i la mida
+                //retorna copia dels document_ids i la mida
                 int *result = (int*) malloc(node->doc_count * sizeof(int));
                 for (int i = 0; i < node->doc_count; ++i)
                     result[i] = node->document_ids[i];
@@ -19,7 +20,7 @@ int* search_documents_by_word(ReverseIndexHashmap *map, const char *word, int *d
             node = node->next;
         }
     }
-    // No trobat
+    //no trobat
     *doc_count = 0;
     return NULL;
 }

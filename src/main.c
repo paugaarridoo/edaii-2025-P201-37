@@ -109,3 +109,5 @@ int main() {
     printf("Fins aviat!\n");
     return 0;
 }
+//pero probar el programa, has d'utilitzar el path correcte
+//per exemple per a wikipedia 12 seria: datasets/wikipedia12
