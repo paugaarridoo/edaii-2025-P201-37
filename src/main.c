@@ -35,6 +35,12 @@ int load_doc_paths(const char* folder, char* doc_paths[], int max_docs) {
         // Ignora directoris "." i ".."
         if (strcmp(entry->d_name, ".") == 0 || strcmp(entry->d_name, "..") == 0)
             continue;
+        // Comprova la llargada total abans de copiar
+        size_t total_len = strlen(folder) + 1 + strlen(entry->d_name);
+        if (total_len >= MAX_PATH_LEN) {
+            fprintf(stderr, "Path massa llarg: %s/%s\n", folder, entry->d_name);
+            continue;
+        }
         snprintf(doc_paths[count], MAX_PATH_LEN, "%s/%s", folder, entry->d_name);
         count++;
     }
