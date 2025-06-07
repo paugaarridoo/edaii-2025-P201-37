@@ -22,7 +22,7 @@
 #define MAX_PATH_LEN 256
 #define MAX_DOCS 5400
 
-// Carrega els paths dels fitxers d'una carpeta
+//carrega els paths dels documents
 int load_doc_paths(const char* folder, char* doc_paths[], int max_docs) {
     DIR* dir = opendir(folder);
     if (!dir) {
@@ -36,7 +36,7 @@ int load_doc_paths(const char* folder, char* doc_paths[], int max_docs) {
             continue;
         size_t folder_len = strlen(folder);
         size_t name_len = strlen(entry->d_name);
-        // Comprova que càpiga tot (folder + '/' + nom + '\0')
+        //comprova que capiga el folder
         if (folder_len + 1 + name_len >= MAX_PATH_LEN) {
             fprintf(stderr, "Path massa llarg: %s/%s\n", folder, entry->d_name);
             continue;
@@ -66,14 +66,14 @@ int main() {
 
     int doc_count = load_doc_paths(folder, doc_paths, MAX_DOCS);
 
-    // Carrega els documents
+    //carrega documents
     Document* docs[MAX_DOCS];
     for (int i = 0; i < doc_count; ++i) {
         docs[i] = malloc(sizeof(Document));
         Document_init_from_file(docs[i], doc_paths[i]);
     }
 
-    // Inicialitza el reverse index
+    //inicia el reverse index
     ReverseIndexHashmap *reverse_index = create_reverse_index(200);
     construir_index_invers(reverse_index, docs, doc_count);
 
@@ -83,7 +83,7 @@ int main() {
         scanf(" %[^\n]", query);
         if (strcmp(query, "exit") == 0) break;
 
-        // Cerca eficient amb índex invers
+        //busqueda amb el reverse index
         int found_count = 0;
         int *found_docs = search_documents_by_word(reverse_index, query, &found_count);
 
@@ -98,7 +98,7 @@ int main() {
         free(found_docs);
     }
 
-    // Allibera memòria
+    //buida la memoria
     for (int i = 0; i < MAX_DOCS; ++i) free(doc_paths[i]);
     for (int i = 0; i < doc_count; ++i) {
         Document_lliberar(docs[i]);
